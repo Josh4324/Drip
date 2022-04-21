@@ -8,9 +8,11 @@ const cors = require("cors");
 
 require("dotenv").config();
 
-const port = process.env.PORT || 6000;
+const port = process.env.PORT || 3000;
 
 const app = express();
+
+app.use("/files", express.static("files"));
 
 app.use(
   express.json({
@@ -75,7 +77,9 @@ app.post("/drip/file", async (req, res) => {
   try {
     let allData = [];
 
-    let name = "./files" + "/" + uuid() + "." + "xlsx";
+    let filename = uuid();
+    let name = __dirname + "/files" + "/" + filename + "." + "xlsx";
+    let dfile = "/files" + "/" + filename + "." + "xlsx";
 
     let addList = req.body.addList;
     let track = [];
@@ -117,7 +121,7 @@ app.post("/drip/file", async (req, res) => {
 
           return res.status(200).json({
             success: true,
-            name: name,
+            name: dfile,
           });
         }
       })();
