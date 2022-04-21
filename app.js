@@ -67,7 +67,11 @@ const signer = provider.getSigner(process.env.address);
 
 const getContract = new ethers.Contract(process.env.caddress, abi.abi, signer);
 
-app.post("/api/drip", async (req, res) => {
+app.get("/drip/check", (req, res) => {
+  res.status(200).json({ success: true });
+});
+
+app.post("/drip/file", async (req, res) => {
   try {
     let allData = [];
 
